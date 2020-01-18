@@ -173,19 +173,11 @@ LinkedList.prototype.isCircle = function () {
   return slow === fast;
 }
 
+/** 合并两个有序链表 */
 LinkedList.prototype.merge = function (linkedList) {
-  if (!linkedList) return false;
-  if (!this.isEmpty()) this.head = linkedList;
-
-  let p = this.head;
-  while (p.next !== null) {
-      p = p.next; // 把指针移动的链表的末尾
-  }
-
-  p.next = linkedList;
-
-  return this;
+  
 }
+
 
 /** 获取倒数第n个元素 */
 LinkedList.prototype.getNodeFromEndByPos = function (n) {
@@ -257,5 +249,5 @@ linkedList1.add(3);
 linkedList1.add(4);
 linkedList1.add(5);
 linkedList1.add(6);
-const data = linkedList1.getCenterNode()
-console.log(data);
+const list = linkedList1.reverse()
+console.log(linkedList1.print());
