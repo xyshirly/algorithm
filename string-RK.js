@@ -81,26 +81,6 @@ HashTable.prototype.find = function(str) {
   return this.arr[i].find(str);
 }
 
-function bf(str, temp) {
-  if (!str || !temp) return false;
-
-  for (let i = 0; i < str.length; i++) {
-    let k = i;  // 用于在主串中移动
-    for (let j = 0; j < temp.length; j++) {
-      if (str[k] === temp[j]) {
-        k++;
-        if ((k - i + 1) === temp.length) {
-          return true;
-        }
-      } else {
-        break;
-      }
-    }
-  }
-
-  return false;
-}
-
 function rk(str, temp) {
   if (!str || !temp) return false;
   if (temp.length > str.length) return false;
