@@ -1,32 +1,86 @@
-// 计算 1+2=3
-import Stack from 'stack'
+function Stack() {
+  this.head = 0;
+  this.container = [];
+}
 
-function Caculator() {
-  this._isOperator = function(code) {
-    return (code === '+' || code === '-' || code === '*' || code === '/') ? true : false;
+Stack.prototype.push = function(data) {
+  this.container[this.head] = data;
+  this.head++;
+}
+
+Stack.prototype.pop = function() {
+  const re = this.container[this.head];
+  this.head--;
+  return re;
+}
+
+Stack.prototype.top = function() {
+  if (!this.head) return null;
+  return this.container[this.head];
+}
+
+Stack.prototype.print = function() {
+  for(let i = 0; i < this.head; i++) {
+    console.log(this.container[i]);
   }
 }
 
+function isString(str) {
+  return Object.prototype.toString.call(str) === '[object String]'
+}
+
+function isNumber(str) {
+  return Object.prototype.toString.call(str) === '[object Number]'
+}
+
+function isOperator(charCode) {
+  return charCode === '+' || charCode === '-' || charCode === '*' || charCode === '/';
+}
+
+function Caculator() {
+  this.numStack = new Stack();
+  this.operStack = new Stack();
+}
 
 Caculator.prototype.caculate = function(str) {
   if (!str) return false;
-  var arr = str.split('');  // 字符串转数组
-  var stackNum = new Stack(); // 保存数字
-  var stackOper = new Stack();  // 保存运算符
+  if (!isString(str)) return false;
 
-  let p = 0;
-  while(p < arr.length && arr[p] !== '=') {
-    if (typeof arr[p] === 'number') {
-      // 每次添加一个数字，需要检查符号栈顶部的元素
-      let el = stackOper.pop();
-      if (el === '*' || el === '/') {
-        // 
+  let i = 0;
+  const strArr = str.split('');
+  while(strArr[i] !== '=') {
+    if (typeof (+strArr[i]) === 'number') {
+      this.numStack.push(+strArr[i]);
+      i++;
+    }
+
+    if (isOperator(strArr[i])) {
+      if (strArr[i] === '*' || strArr[i] === '/') {
+        const n1 = this.numStack.pop();
+        const n2 = strArr[i+1];
+        this.numStack.push(n1*n2);
+        i = i + 2;
+      } else {
+        this.operStack.push(strArr[i]);
+        i++;
       }
     }
-    if (this._isOperator(arr[p])) {
-      stackOper.push(arr[p]);
-    }
-
-    p++;
   }
+
+  // 最后依次从两个栈中取出数据做运算
+  for(let i = 0; i < this.operStack.head; i++) {
+    const num1 = this.numStack.pop();
+    const num2 = this.numStack.pop();
+
+    if (this.operStack[i] === '+') {
+      this.numStack.push(num1 + num2);
+    } else if (this.operStack[i] === '-') {
+      this.numStack.push(num2 - num1);
+    }
+  }
+
+  return this.numStack.pop();
 }
+
+const caculator = new Caculator();
+console.log(caculator.caculate('1+2*3+4='));

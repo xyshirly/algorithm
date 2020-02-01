@@ -1,23 +1,35 @@
-function Stack() {
-  if (!(this instanceof Stack)) throw Error('erro');
-  this.items = [];
-  this.length = 0;
+// 栈
+export function Stack() {
+  this.head = 0;
+  this.container = [];
 }
 
 Stack.prototype.push = function(data) {
-  if (!data) return false;
-  this.length++;
-  this.items.push(data);
+  this.container[this.head] = data;
+  this.head++;
 }
 
 Stack.prototype.pop = function() {
-  if (this.length > 0) this.length--;
-  return this.items.pop();
+  const re = this.container[this.head];
+  this.head--;
+  return re;
+}
+
+Stack.prototype.top = function() {
+  if (!this.head) return null;
+  return this.container[this.head];
 }
 
 Stack.prototype.print = function() {
-  if (!this.items.length) return false;
-  this.items.forEach(item => (console.log(item)));
+  for(let i = 0; i < this.head; i++) {
+    console.log(this.container[i]);
+  }
 }
 
-export default Stack;
+/* const stack = new Stack();
+stack.push(1);
+stack.push(2);
+stack.push(3);
+stack.push(4);
+stack.push(5);
+stack.print(); */
