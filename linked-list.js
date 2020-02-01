@@ -5,6 +5,10 @@ function Node(data) {
 }
 
 function LinkedList() {
+  /* if (!(this instanceof LinkedList)) {
+    return new LinkedList();
+  }
+  if (!new.target) throw Error('使用new创建对象'); */
   this.length = 0;
   this.head = null;
 }

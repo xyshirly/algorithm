@@ -7,10 +7,9 @@ function CircleQueue(size) {
 CircleQueue.prototype.enQueue = function (data) {
   if (!data) return true;
 
-  if (this.isFull()) return true;
-
-  this.tail = (this.tail + 1)%this.MAXSIZE;
   this.container[this.tail] = data;
+  if (this.isFull()) return true;
+  this.tail = (this.tail + 1)%this.MAXSIZE;
 }
 
 CircleQueue.prototype.deQueue = function() {
@@ -42,4 +41,5 @@ circleQueue.enQueue(1);
 circleQueue.enQueue(2);
 circleQueue.enQueue(3);
 circleQueue.enQueue(4);
+
 circleQueue.print();
