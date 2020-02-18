@@ -1,7 +1,8 @@
 // 冒泡排序
+// 适用于数据量少的情况
 function sortBubble(arr) {
   const len = arr.length;
-  if (!arr || !len) return false;
+  if (arr.length <= 1) return arr;
 
   for (let i = 0; i < len; i++) {
     for (let j = i + 1; j < len; j++) {
@@ -31,4 +32,4 @@ function bubbleSort(arr) {
 }
 
 let arr = [3, 1, 4, 40, 30, 5, 20];
-console.log(bubbleSort(arr));
+console.log(sortBubble(arr));
